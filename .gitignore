@@ -2,4 +2,8 @@
 # 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
 ################################################################################
 
-/src/Jelly/.vs/Jelly
+/src/Jelly/.vs/
+logs
+obj
+bin
+/src/Jelly/Jelly.Models/Migrations

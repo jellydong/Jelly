@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30406.217
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jelly.Api", "Jelly.Api\Jelly.Api.csproj", "{8EC5CEC7-ADE3-484A-A476-FB714B89C1C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jelly.Models", "Jelly.Models\Jelly.Models.csproj", "{289595B4-4BA3-40BE-A6D6-09DFB76ED6E3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8EC5CEC7-ADE3-484A-A476-FB714B89C1C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EC5CEC7-ADE3-484A-A476-FB714B89C1C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EC5CEC7-ADE3-484A-A476-FB714B89C1C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EC5CEC7-ADE3-484A-A476-FB714B89C1C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{289595B4-4BA3-40BE-A6D6-09DFB76ED6E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{289595B4-4BA3-40BE-A6D6-09DFB76ED6E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{289595B4-4BA3-40BE-A6D6-09DFB76ED6E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{289595B4-4BA3-40BE-A6D6-09DFB76ED6E3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1203ADDC-42CF-46EA-BF7E-A70105F0A8AF}
+	EndGlobalSection
+EndGlobal
