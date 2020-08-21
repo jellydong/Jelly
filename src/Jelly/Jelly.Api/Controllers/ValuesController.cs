@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Jelly.IServices;
 using Jelly.Models;
 using Jelly.Resources;
 using Microsoft.AspNetCore.Http;
@@ -17,24 +18,20 @@ namespace Jelly.Api.Controllers
     {
         private readonly ILogger<ValuesController> _logger;
         private readonly IMapper _mapper;
+        private readonly IPostService _postService;
 
-        public ValuesController(ILogger<ValuesController> logger, IMapper mapper)
+        public ValuesController(ILogger<ValuesController> logger, IMapper mapper,IPostService postService)
         {
             _logger = logger;
             _mapper = mapper;
+            _postService = postService;
         }
 
-        public PostResource Get()
+        public IEnumerable<PostResource> Get()
         {
-            Post post = new Post()
-            {
-                Author = "Jelly",
-                Body = "文章内容",
-                Title = "文章标题",
-                UpdatedTime = DateTime.Now
-            };
-            PostResource postResource = _mapper.Map<Post, PostResource>(post);
-            return postResource;
+            var data = _postService.GetList();
+            var postList = _mapper.Map<IEnumerable<Post>, IEnumerable<PostResource>>(data);
+            return postList;
         }
     }
 }

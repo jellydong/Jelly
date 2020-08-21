@@ -21,8 +21,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Jelly.Core\Jelly.Core.csproj" />
+    <ProjectReference Include="..\Jelly.IServices\Jelly.IServices.csproj" />
     <ProjectReference Include="..\Jelly.Models\Jelly.Models.csproj" />
+    <ProjectReference Include="..\Jelly.Repositories\Jelly.Repositories.csproj" />
     <ProjectReference Include="..\Jelly.Resources\Jelly.Resources.csproj" />
+    <ProjectReference Include="..\Jelly.Services\Jelly.Services.csproj" />
   </ItemGroup>
 
 

@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
+using Jelly.IRepositories;
 using Jelly.Models.Database;
 
 namespace Jelly.Repositories
 {
-    public class UnitOfWork
+    public class UnitOfWork:IUnitOfWork
     {
         private readonly JellyContext _jellyContext;
 
