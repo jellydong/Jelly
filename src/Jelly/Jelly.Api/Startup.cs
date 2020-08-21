@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Jelly.Api.Extensions;
+using Jelly.Core.AutoMapper;
 using Jelly.Models.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +35,8 @@ namespace Jelly.Api
                 var connectionString = this.Configuration["ConnectionStrings:MySqlConn"];
                 options.UseMySql(connectionString);
             });
+            //AutoMapper
+            services.AddAutoMapper(MapperRegister.MapType());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

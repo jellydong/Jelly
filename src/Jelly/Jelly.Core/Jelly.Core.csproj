@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Jelly.Models\Jelly.Models.csproj" />
+    <ProjectReference Include="..\Jelly.Resources\Jelly.Resources.csproj" />
+  </ItemGroup>
+
+</Project>
