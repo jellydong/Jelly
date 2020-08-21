@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using FluentValidation;
 using Jelly.Api.Extensions;
+using Jelly.Core.Autofac;
 using Jelly.Core.AutoMapper;
 using Jelly.IRepositories;
 using Jelly.IServices;
@@ -32,6 +35,9 @@ namespace Jelly.Api
 
         public IConfiguration Configuration { get; }
 
+        //Autofac 新增
+        public ILifetimeScope AutofacContainer { get; private set; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -58,9 +64,19 @@ namespace Jelly.Api
             services.AddScoped<IPostService, PostService>();
         }
 
+        //autofac 新增
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            // 直接用Autofac注册我们自定义的 
+            builder.RegisterModule(new CustomAutofacModule());
+        }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            //Autofac 新增
+            this.AutofacContainer = app.ApplicationServices.GetAutofacRoot();
+
             //自定义异常过滤器
             app.UseMyExceptionHandler(loggerFactory);
 
