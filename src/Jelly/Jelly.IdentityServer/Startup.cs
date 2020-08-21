@@ -28,6 +28,13 @@ namespace Jelly.IdentityServer
                 .AddInMemoryApiScopes(InMemoryConfiguration.ApiScopes())
                 .AddInMemoryApiResources(InMemoryConfiguration.ApiResources());
             #endregion
+
+            // ≈‰÷√cookie≤ﬂ¬‘
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                //https://docs.microsoft.com/zh-cn/aspnet/core/security/samesite?view=aspnetcore-3.1&viewFallbackFrom=aspnetcore-3
+                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Lax;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,6 +44,8 @@ namespace Jelly.IdentityServer
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCookiePolicy();
 
             app.UseIdentityServer();
 
