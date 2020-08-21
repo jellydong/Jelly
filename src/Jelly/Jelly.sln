@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{9F24
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{05BC9E6F-B440-4128-8E02-750103CE3ED8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jelly.IdentityServer", "Jelly.IdentityServer\Jelly.IdentityServer.csproj", "{2D49C0CF-5B99-4735-B8D3-5D5C43B3844D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{9208A32C-B822-4BD2-B17F-52D897F4D28A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9208A32C-B822-4BD2-B17F-52D897F4D28A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9208A32C-B822-4BD2-B17F-52D897F4D28A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D49C0CF-5B99-4735-B8D3-5D5C43B3844D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D49C0CF-5B99-4735-B8D3-5D5C43B3844D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D49C0CF-5B99-4735-B8D3-5D5C43B3844D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D49C0CF-5B99-4735-B8D3-5D5C43B3844D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
