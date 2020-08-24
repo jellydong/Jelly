@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Jelly.Models;
 using Jelly.Resources;
 
@@ -9,7 +10,7 @@ namespace Jelly.Core.AutoMapper
         public PostProfile()
         {
             CreateMap<Post, PostResource>()
-            .ForMember(dest => dest.LastModified, opt => opt.MapFrom(src => src.UpdatedTime));
+            .ForMember(dest => dest.LastModified, opt => opt.MapFrom(src => src.UpdatedTime.HasValue?src.CreatedTime:src.UpdatedTime));
             CreateMap<PostResource, Post>();
         }
     }

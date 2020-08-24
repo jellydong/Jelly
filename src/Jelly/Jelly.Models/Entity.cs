@@ -23,11 +23,11 @@ namespace Jelly.Models
         /// <summary>
         /// 更新人
         /// </summary>
-        public int UpdatedBy { get; set; }
+        public int? UpdatedBy { get; set; }
         /// <summary>
         /// 更新时间
         /// </summary>
-        public DateTime UpdatedTime { get; set; }
+        public DateTime? UpdatedTime { get; set; }
         /// <summary>
         /// Uuid GUID
         /// </summary>

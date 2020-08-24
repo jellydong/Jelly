@@ -9,6 +9,9 @@ namespace Jelly.Resources
         /// Id
         /// </summary>
         public int Id { get; set; }
+        /// <summary>
+        /// 最后修改时间
+        /// </summary>
         
         public DateTime LastModified { get; set; }
 

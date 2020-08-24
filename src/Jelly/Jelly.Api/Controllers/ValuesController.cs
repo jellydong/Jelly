@@ -12,6 +12,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Jelly.Api.Controllers
 {
+    /// <summary>
+    /// 测试
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
@@ -26,6 +29,10 @@ namespace Jelly.Api.Controllers
             _mapper = mapper;
             _postService = postService;
         }
+        /// <summary>
+        /// 测试AutoMapper
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<PostResource> Get()
         {

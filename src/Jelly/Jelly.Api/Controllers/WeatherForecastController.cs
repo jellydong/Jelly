@@ -8,6 +8,9 @@ using Newtonsoft.Json;
 
 namespace Jelly.Api.Controllers
 {
+    /// <summary>
+    /// 天气接口
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -23,7 +26,10 @@ namespace Jelly.Api.Controllers
         {
             _logger = logger;
         }
-
+        /// <summary>
+        /// 获取天气
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
