@@ -8,3 +8,4 @@ obj
 bin
 /src/Jelly/Jelly.Repositories/Migrations
 /src/Jelly/Jelly.Api/Jelly.Api.xml
+/src/Jelly/Jelly.Resources/Jelly.Resources.xml

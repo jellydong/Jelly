@@ -2,6 +2,9 @@
 
 namespace Jelly.Resources
 {
+    /// <summary>
+    /// 父类
+    /// </summary>
     public class BaseResource
     {
 

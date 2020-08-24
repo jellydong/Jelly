@@ -72,7 +72,7 @@ namespace Jelly.Api
                     Name = "许可证名字",
                     Url = new Uri("http://www.525600.xyz")
                 }
-            }, new List<string> { "Jelly.Api.xml" }); 
+            }, new List<string> { "Jelly.Api.xml" , "Jelly.Resources.xml" }); 
             #endregion
             services.AddControllers();
         }
