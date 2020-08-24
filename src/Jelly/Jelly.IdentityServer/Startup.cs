@@ -23,6 +23,7 @@ namespace Jelly.IdentityServer
 
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
+                .AddInMemoryIdentityResources(InMemoryConfiguration.IdentityResources)
                 .AddTestUsers(InMemoryConfiguration.Users().ToList())
                 .AddInMemoryClients(InMemoryConfiguration.Clients())
                 .AddInMemoryApiScopes(InMemoryConfiguration.ApiScopes())
