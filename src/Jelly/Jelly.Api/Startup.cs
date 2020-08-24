@@ -8,7 +8,6 @@ using FluentValidation;
 using Jelly.Api.Extensions;
 using Jelly.Core.Autofac;
 using Jelly.Core.AutoMapper;
-using Jelly.Core.Swagger;
 using Jelly.Models.Database;
 using Jelly.Resources;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -58,70 +57,8 @@ namespace Jelly.Api
             //AddSingleton单例模式：每次都获取同一个实例 
             #endregion
 
-            #region 注册Swagger服务
-            services.AddSwaggerGen(options =>
-            {
-
-                options.CustomSchemaIds(type => type.FullName);
-
-                options.IncludeXmlComments(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Jelly.Api.xml"));
-                options.IncludeXmlComments(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Jelly.Resources.xml"));
-
-                options.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "Jelly.Api",
-                    Version = "v1",
-                    Description = "这是描述信息",
-                    TermsOfService = new Uri("http://www.525600.xyz"),
-                    Contact = new OpenApiContact()
-                    {
-                        Name = "Jelly",
-                        Email = "1772829123@qq.com",
-                        Url = new Uri("http://www.525600.xyz")
-                    },
-                    License = new OpenApiLicense()
-                    {
-                        Name = "许可证名字",
-                        Url = new Uri("http://www.525600.xyz")
-                    }
-                });
-                //接入IdentityServer
-                options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-                {
-                    Type = SecuritySchemeType.OAuth2,
-
-                    Flows = new OpenApiOAuthFlows()
-                    { 
-                        #region 方式一 对应 Jelly.IdentityServer InMemoryConfiguration.cs 中的方式一
-                        Password = new OpenApiOAuthFlow
-                        {
-
-                            AuthorizationUrl = new Uri("http://localhost:8000/connect/authorize"),
-                            TokenUrl = new Uri("http://localhost:8000/connect/token"),
-                            Scopes = new Dictionary<string, string>
-                                {
-                                    {"scope1", "Jelly.Api - full access"}
-                                }
-                        },
-                        #endregion
-                        #region 方式二 对应 Jelly.IdentityServer InMemoryConfiguration.cs 中的方式二
-                        Implicit = new OpenApiOAuthFlow
-                        {
-
-                        AuthorizationUrl = new Uri("http://localhost:8000/connect/authorize"),
-                        TokenUrl = new Uri("http://localhost:8000/connect/token"),
-                        Scopes = new Dictionary<string, string>
-                        {
-                            {"scope1", "Jelly.Api - full access"}
-                        }
-                    }
-                    #endregion 
-                    }
-                });
-
-                options.OperationFilter<AuthResponsesOperationFilter>();
-                options.CustomSchemaIds(type => type.FullName);
-            });
+            #region 注册Swagger服务 
+            services.AddCustomSwagger();
             #endregion
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -158,16 +95,7 @@ namespace Jelly.Api
             app.UseAuthorization();
 
             // 启用Swagger中间件
-            app.UseSwagger(c =>
-                {
-                    //相对路径加载swagger文档 ? 在Ocelot网关中统一配置Swagger https://www.cnblogs.com/focus-lei/p/9047410.html
-                    //c.RouteTemplate = "swagger/{documentName}/swagger.json";
-                })
-                .UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Jelly.Api");
-                    c.RoutePrefix = string.Empty;
-                });
+            app.UseCustomSwagger();
 
             //授权
             app.UseAuthorization();

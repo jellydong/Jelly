@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Jelly.Core.Swagger
+namespace Jelly.Api.Extensions
 {
     public class AuthResponsesOperationFilter : IOperationFilter
     { 
@@ -36,6 +35,19 @@ namespace Jelly.Core.Swagger
                                     Id = "oauth2"}
                             }
                         ] = new[] { "jellyApi" }
+                    },
+                    new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            new string[] { }
+                        }
                     }
                 };
             }
