@@ -26,7 +26,7 @@ namespace Jelly.Api.Controllers
             _mapper = mapper;
             _postService = postService;
         }
-
+        [HttpGet]
         public IEnumerable<PostResource> Get()
         {
             var data = _postService.GetList();

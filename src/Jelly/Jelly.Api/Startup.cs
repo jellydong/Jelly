@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
@@ -9,20 +7,16 @@ using FluentValidation;
 using Jelly.Api.Extensions;
 using Jelly.Core.Autofac;
 using Jelly.Core.AutoMapper;
-using Jelly.IRepositories;
-using Jelly.IServices;
+using Jelly.Core.Swagger;
 using Jelly.Models.Database;
-using Jelly.Repositories;
 using Jelly.Resources;
-using Jelly.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace Jelly.Api
 {
@@ -41,7 +35,6 @@ namespace Jelly.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             services.AddDbContext<JellyContext>(options =>
             {
                 var connectionString = this.Configuration["ConnectionStrings:MySqlConn"];
@@ -53,15 +46,35 @@ namespace Jelly.Api
             //FluentValidation
             services.AddTransient<IValidator<PostResource>, PostResourceValidator>();
 
+            #region 依赖注入
             //AddTransient：瞬时模式每次请求，都获取一个新的实例。即使同一个请求获取多次也会是不同的实例
 
             //AddScoped：每次请求，都获取一个新的实例。同一个请求获取多次会得到相同的实例
 
-            //AddSingleton单例模式：每次都获取同一个实例
-
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IPostRepository, PostRepository>();
-            services.AddScoped<IPostService, PostService>();
+            //AddSingleton单例模式：每次都获取同一个实例 
+            #endregion
+             
+            #region 注册Swagger服务
+            services.AddCustomSwagger(new OpenApiInfo
+            {
+                Title = "Jelly.Api",
+                Version = "v1",
+                Description = "这是描述信息",
+                TermsOfService = new Uri("http://www.525600.xyz"),
+                Contact = new OpenApiContact()
+                {
+                    Name = "Jelly",
+                    Email = "1772829123@qq.com",
+                    Url = new Uri("http://www.525600.xyz")
+                },
+                License = new OpenApiLicense()
+                {
+                    Name = "许可证名字",
+                    Url = new Uri("http://www.525600.xyz")
+                }
+            }, new List<string> { "Jelly.Api.xml" }); 
+            #endregion
+            services.AddControllers();
         }
 
         //autofac 新增
@@ -83,6 +96,9 @@ namespace Jelly.Api
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // 启用Swagger中间件
+            app.UseCustomSwagger(new OpenApiInfo { Title = "Jelly.Api", Version = "v1" });
 
             app.UseEndpoints(endpoints =>
             {

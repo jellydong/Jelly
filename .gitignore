@@ -7,3 +7,4 @@ logs
 obj
 bin
 /src/Jelly/Jelly.Models/Migrations
+/src/Jelly/Jelly.Api/Jelly.Api.xml

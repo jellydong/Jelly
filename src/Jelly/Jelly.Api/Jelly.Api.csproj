@@ -4,6 +4,11 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>Jelly.Api.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Autofac" Version="5.2.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
@@ -28,6 +33,12 @@
     <ProjectReference Include="..\Jelly.Repositories\Jelly.Repositories.csproj" />
     <ProjectReference Include="..\Jelly.Resources\Jelly.Resources.csproj" />
     <ProjectReference Include="..\Jelly.Services\Jelly.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Jelly.Api.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 
