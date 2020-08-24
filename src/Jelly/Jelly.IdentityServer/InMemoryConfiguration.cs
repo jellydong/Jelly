@@ -27,8 +27,8 @@ namespace Jelly.IdentityServer
             {
                 new ApiResource
                 {
-                    Name = "api1",
-                    DisplayName = "My Api1",
+                    Name = "jellyApi",
+                    DisplayName = "jellyApi",
                     Scopes = { "scope1" }
                 }
             };
@@ -41,16 +41,39 @@ namespace Jelly.IdentityServer
         {
             return new[]
             {
-                new Client
+                #region 方式一 对应 Jelly.Api Startup.cs 中的方式一
+		        new Client
                 {
-                    ClientId = "client",
+                    ClientId = "jellyApi1",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "scope1" }
+                    AllowAccessTokensViaBrowser = true,//是否通过浏览器为此客户端传输访问令牌
+                    RequirePkce = false,
+                    RequireClientSecret = false,
+
+                    RedirectUris = {"http://localhost:5000/oauth2-redirect.html"},
+                    AllowedCorsOrigins = {"http://localhost:5000","http://localhost:5000"},
+                    AllowedScopes = { "scope1" },
                 }
+	            #endregion
+                ,
+                #region 方式二 对应 Jelly.Api Startup.cs 中的方式二
+                new Client
+                {
+                ClientId = "jellyApi2",
+                AllowedGrantTypes = GrantTypes.Implicit, 
+                AllowAccessTokensViaBrowser = true,//是否通过浏览器为此客户端传输访问令牌
+                RequirePkce = false,
+                RequireClientSecret = false,
+
+                RedirectUris = {"http://localhost:5000/oauth2-redirect.html"},
+                AllowedCorsOrigins = {"http://localhost:5000","http://localhost:5000"},
+                AllowedScopes = { "scope1" },
+                } 
+                #endregion
             };
         }
         /// <summary>
@@ -64,8 +87,8 @@ namespace Jelly.IdentityServer
                 new TestUser
                 {
                     SubjectId = "1",
-                    Username = "mail@qq.com",
-                    Password = "password"
+                    Username = "admin",
+                    Password = "admin"
                 }
             };
         }
