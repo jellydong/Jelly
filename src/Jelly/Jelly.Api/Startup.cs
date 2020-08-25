@@ -36,6 +36,16 @@ namespace Jelly.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                //this defines a CORS policy called "default"
+                options.AddPolicy("default", policy =>
+                {
+                    policy.WithOrigins("http://localhost:8080")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
             services.AddControllers();
 
             services.AddDbContext<JellyContext>(options =>
@@ -62,13 +72,13 @@ namespace Jelly.Api
             #endregion
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+                .AddIdentityServerAuthentication(options =>
                 {
                     options.RequireHttpsMetadata = false;
                     options.Authority = "http://localhost:8000";
-                    options.Audience = "jellyApi";
+                    options.ApiName = "jellyApi";
+                    options.ApiSecret = "secret";
                 });
-
         }
 
         //autofac 新增
@@ -81,6 +91,7 @@ namespace Jelly.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseCors("default");
             //身份验证
             app.UseAuthentication();
 
@@ -99,7 +110,6 @@ namespace Jelly.Api
 
             //授权
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -38,7 +38,11 @@ namespace Jelly.IdentityServer
                 {
                     Name = "jellyApi",
                     DisplayName = "jellyApi",
-                    Scopes = { "scope1" }
+                    Scopes = { "scope1" },
+                    ApiSecrets = new List<Secret>()
+                    {
+                        new Secret("secret".Sha256())
+                    }
                 }
             };
         }
@@ -93,6 +97,44 @@ namespace Jelly.IdentityServer
                     },
                     } 
                 #endregion
+                ,
+                new Client()
+                {
+                    ClientId = "jellyweb",
+                    ClientName = " jellyweb ",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser=true,
+
+                    AccessTokenType = AccessTokenType.Reference,
+                    UpdateAccessTokenClaimsOnRefresh = true,
+                    AllowOfflineAccess = true,
+                    RequireConsent = false,
+                    //AccessTokenLifetime = 50,                    
+                    RedirectUris = new List<string>()
+                    {
+                        "http://localhost:8080/CallBack",
+                        "http://localhost:8080/SilentCallback"
+                    },
+                    PostLogoutRedirectUris = {
+                        "http://localhost:8080/"
+                    },
+                    AllowedCorsOrigins = {
+                        "http://localhost:8080"
+                    },
+
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        "scope1", //授权的Scopes 
+
+                    },
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                }
                 ,
                 new Client()
                 {
