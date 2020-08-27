@@ -27,7 +27,8 @@ namespace Jelly.IdentityServer
                 .AddTestUsers(InMemoryConfiguration.Users().ToList())
                 .AddInMemoryClients(InMemoryConfiguration.Clients())
                 .AddInMemoryApiScopes(InMemoryConfiguration.ApiScopes())
-                .AddInMemoryApiResources(InMemoryConfiguration.ApiResources());
+                .AddInMemoryApiResources(InMemoryConfiguration.ApiResources())
+                .AddProfileService<ProfileService>();
             #endregion
 
             // ≈‰÷√cookie≤ﬂ¬‘

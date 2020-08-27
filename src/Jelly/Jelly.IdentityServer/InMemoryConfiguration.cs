@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Security.Claims;
+using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
@@ -12,7 +14,11 @@ namespace Jelly.IdentityServer
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResources.Email()
+                new IdentityResources.Address(),
+                new IdentityResources.Phone(),
+                new IdentityResources.Email(),
+                new IdentityResource("roles", "角色", new List<string> { JwtClaimTypes.Role }),
+                new IdentityResource("locations", "地点", new List<string> { "location" }),
             };
 
         /// <summary>
@@ -38,7 +44,16 @@ namespace Jelly.IdentityServer
                 {
                     Name = "jellyApi",
                     DisplayName = "jellyApi",
-                    Scopes = { "scope1" },
+                    Scopes = {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.Address,
+                        IdentityServerConstants.StandardScopes.Phone,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "roles",
+                        "locations",
+                        "scope1",
+                    },
                     ApiSecrets = new List<Secret>()
                     {
                         new Secret("secret".Sha256())
@@ -66,14 +81,21 @@ namespace Jelly.IdentityServer
                     AllowAccessTokensViaBrowser = true,//是否通过浏览器为此客户端传输访问令牌
                     RequirePkce = false,
                     RequireClientSecret = false,
+                    AlwaysSendClientClaims = true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
 
                     RedirectUris = {"http://localhost:5000/oauth2-redirect.html"},
                     AllowedCorsOrigins = {"http://localhost:5000","http://localhost:5000"},
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.Address,
+                        IdentityServerConstants.StandardScopes.Phone,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "scope1"
+                        "roles",
+                        "locations",
+                        "scope1", //授权的Scopes 
                     },
                 }
 	            #endregion
@@ -86,14 +108,21 @@ namespace Jelly.IdentityServer
                     AllowAccessTokensViaBrowser = true,//是否通过浏览器为此客户端传输访问令牌
                     RequirePkce = false,
                     RequireClientSecret = false,
+                    AlwaysSendClientClaims = true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
 
                     RedirectUris = {"http://localhost:5000/oauth2-redirect.html"},
                     AllowedCorsOrigins = {"http://localhost:5000","http://localhost:5000"},
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.Address,
+                        IdentityServerConstants.StandardScopes.Phone,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "scope1"
+                        "roles",
+                        "locations",
+                        "scope1", //授权的Scopes 
                     },
                     } 
                 #endregion
@@ -108,8 +137,9 @@ namespace Jelly.IdentityServer
                     AccessTokenType = AccessTokenType.Reference,
                     UpdateAccessTokenClaimsOnRefresh = true,
                     AllowOfflineAccess = true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
                     RequireConsent = false,
-                    //AccessTokenLifetime = 50,                    
+                    AccessTokenLifetime = 60 * 2,
                     RedirectUris = new List<string>()
                     {
                         "http://localhost:8080/CallBack",
@@ -124,9 +154,14 @@ namespace Jelly.IdentityServer
 
                     AllowedScopes =
                     {
+
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.Address,
+                        IdentityServerConstants.StandardScopes.Phone,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "roles",
+                        "locations",
                         "scope1", //授权的Scopes 
 
                     },
@@ -146,8 +181,9 @@ namespace Jelly.IdentityServer
                     AccessTokenType = AccessTokenType.Reference,
                     UpdateAccessTokenClaimsOnRefresh = true,
                     AllowOfflineAccess = true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
                     RequireConsent = false,
-                    //AccessTokenLifetime = 50,                    
+                    AccessTokenLifetime = 60 * 2,
                     RedirectUris = new List<string>()
                     {
                         "http://localhost:8080/static/callback.html",
@@ -162,9 +198,14 @@ namespace Jelly.IdentityServer
 
                     AllowedScopes =
                     {
+
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.Address,
+                        IdentityServerConstants.StandardScopes.Phone,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "roles",
+                        "locations",
                         "scope1", //授权的Scopes 
 
                     }
@@ -179,11 +220,30 @@ namespace Jelly.IdentityServer
         {
             return new[]
             {
-                new TestUser
-                {
-                    SubjectId = "1",
-                    Username = "admin",
-                    Password = "admin"
+                new TestUser{SubjectId = "818727", Username = "alice", Password = "alice",
+                    Claims =
+                    {
+                        new Claim(JwtClaimTypes.Name, "Alice Smith"),
+                        new Claim(JwtClaimTypes.GivenName, "Alice"),
+                        new Claim(JwtClaimTypes.FamilyName, "Smith"),
+                        new Claim(JwtClaimTypes.Email, "AliceSmith@email.com"),
+                        new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
+                        new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
+                        new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'One Hacker Way', 'locality': 'Heidelberg', 'postal_code': 69118, 'country': 'Germany' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json)
+                    }
+                },
+                new TestUser{SubjectId = "88421113", Username = "bob", Password = "bob",
+                    Claims =
+                    {
+                        new Claim(JwtClaimTypes.Name, "Bob Smith"),
+                        new Claim(JwtClaimTypes.GivenName, "Bob"),
+                        new Claim(JwtClaimTypes.FamilyName, "Smith"),
+                        new Claim(JwtClaimTypes.Email, "BobSmith@email.com"),
+                        new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
+                        new Claim(JwtClaimTypes.WebSite, "http://bob.com"),
+                        new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'One Hacker Way', 'locality': 'Heidelberg', 'postal_code': 69118, 'country': 'Germany' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json),
+                        new Claim("location", "somewhere")
+                    }
                 }
             };
         }

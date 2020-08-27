@@ -79,6 +79,15 @@ namespace Jelly.Api
                     options.ApiName = "jellyApi";
                     options.ApiSecret = "secret";
                 });
+            #region MyRegion
+            //.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //.AddJwtBearer(options =>
+            //{
+            //    options.RequireHttpsMetadata = false;
+            //    options.Authority = "http://localhost:8000";
+            //    options.Audience = "jellyApi";
+            //}); 
+            #endregion
         }
 
         //autofac ÐÂÔö
