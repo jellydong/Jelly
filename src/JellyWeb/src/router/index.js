@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Private from '../views/Private.vue'
 import Unauthorized from '../views/Unauthorized.vue'
+import CallBack from '../components/oidc/CallBack.vue'
+import SilentCallback from '../components/oidc/SilentCallback.vue'
 
 Vue.use(VueRouter)
 
@@ -29,6 +31,16 @@ const routes = [
     path: '/unauthorized',
     name: 'Unauthorized',
     component: Unauthorized
+  },
+  {
+    path: '/CallBack',
+    name: 'CallBack',
+    component: CallBack
+  },
+  {
+    path: '/SilentCallback',
+    name: 'SilentCallback',
+    component: SilentCallback
   }
 ]
 
