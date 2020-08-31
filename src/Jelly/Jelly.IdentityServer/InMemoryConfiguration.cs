@@ -146,7 +146,7 @@ namespace Jelly.IdentityServer
                         "http://localhost:8080/SilentCallback"
                     },
                     PostLogoutRedirectUris = {
-                        "http://localhost:8080/"
+                        "http://localhost:8080/"    
                     },
                     AllowedCorsOrigins = {
                         "http://localhost:8080"
