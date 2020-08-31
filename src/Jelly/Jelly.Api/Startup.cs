@@ -44,7 +44,10 @@ namespace Jelly.Api
                     policy.WithOrigins("http://localhost:8080")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
-                });
+                    policy.WithOrigins("http://localhost:8090")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                }); 
             });
             services.AddControllers();
 

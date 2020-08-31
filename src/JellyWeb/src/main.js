@@ -34,6 +34,8 @@ router.beforeEach((to, from, next) => {
             signIn => {
               console.log(signIn)
             })
+        } else {
+          next()
         }
       },
       err => {

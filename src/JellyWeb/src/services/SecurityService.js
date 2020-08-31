@@ -10,24 +10,28 @@ var mgr = new Oidc.UserManager({
   post_logout_redirect_uri: window.location.origin + '/',
   silent_redirect_uri: window.location.origin + '/SilentCallback',
   // 自动刷新Token使用自动刷新Token需要accessTokenExpiringNotificationTime和automaticSilentRenew 一起设置，当AccssToken要过期前:accessTokenExpiringNotificationTime设置的时间，会去请求IdentityServer4 connect/token接口，刷新Token
-  accessTokenExpiringNotificationTime: 60,
+  accessTokenExpiringNotificationTime: 115,
   automaticSilentRenew: true,
   filterProtocolClaims: true,
+  includeIdTokenInSilentRenew: true,
   loadUserInfo: true
 })
 
-Oidc.Log.logger = console
-Oidc.Log.level = Oidc.Log.INFO
+// Oidc.Log.logger = console
+// Oidc.Log.level = Oidc.Log.INFO
 
+// 在建立(或重新建立)用户会话时引发。实际只有重新刷新的时候才会触发？
 mgr.events.addUserLoaded(function (user) {
   console.log('New User Loaded：', arguments)
   console.log('Acess_token: ', user.access_token)
 })
 
+// 在访问令牌到期之前引发。
 mgr.events.addAccessTokenExpiring(function () {
   console.log('AccessToken Expiring：', arguments)
 })
 
+// 在访问令牌过期后引发。
 mgr.events.addAccessTokenExpired(function () {
   console.log('AccessToken Expired：', arguments)
   alert('Session expired. Going out!')
@@ -38,10 +42,12 @@ mgr.events.addAccessTokenExpired(function () {
   })
 })
 
+// 静默登录失败时
 mgr.events.addSilentRenewError(function () {
   console.error('Silent Renew Error：', arguments)
 })
 
+// 用户登录状态发生变化时
 mgr.events.addUserSignedOut(function () {
   alert('Going out!')
   console.log('UserSignedOut：', arguments)
@@ -57,7 +63,9 @@ export default class SecurityService {
   renewToken() {
     const self = this
     return new Promise((resolve, reject) => {
+      debugger
       mgr.signinSilent().then(function (user) {
+        debugger
         if (user == null) {
           self.signIn(null)
         } else {

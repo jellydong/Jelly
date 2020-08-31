@@ -186,14 +186,14 @@ namespace Jelly.IdentityServer
                     AccessTokenLifetime = 60 * 2,
                     RedirectUris = new List<string>()
                     {
-                        "http://localhost:8080/static/callback.html",
-                        "http://localhost:8080/static/silent-renew.html"
+                        "http://localhost:8090/static/callback.html",
+                        "http://localhost:8090/static/silent-renew.html"
                     },
                     PostLogoutRedirectUris = {
-                        "http://localhost:8080/index.html"
+                        "http://localhost:8090/index.html"
                     },
                     AllowedCorsOrigins = {
-                        "http://localhost:8080"
+                        "http://localhost:8090"
                     },
 
                     AllowedScopes =

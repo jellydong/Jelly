@@ -3,17 +3,31 @@
 </template>
 
 <script>
-import Oidc from 'oidc-client'
-
-new Oidc.UserManager()
-  .signinRedirectCallback({ userStore: new Oidc.WebStorageStateStore(), loadUserInfo: true, filterProtocolClaims: true })
-  .then(function (res) {
-    debugger
-    window.location = '/#/Home'
-  })
-  .catch(function (e) {})
-export default {}
+import Mgr from '../../services/SecurityService'
+// var mgr = new Mgr();
+export default {
+  name: 'Callback',
+  data() {
+    return {
+      user: new Mgr({ response_mode: 'query' })
+    }
+  },
+  methods: {},
+  mounted() {
+    this.user
+      .signinRedirectCallback()
+      .then((result) => {
+        var returnUrl = '/'
+        console.info(result)
+        if (result.state) {
+          returnUrl = result.state
+        }
+        this.$router.push(returnUrl)
+      })
+      .catch((err) => {
+        console.error(err)
+        this.$router.push('/signin-oidc-error') // Handle errors any way you want
+      })
+  }
+}
 </script>
-
-<style>
-</style>
