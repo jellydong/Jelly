@@ -1,4 +1,5 @@
 import Oidc from 'oidc-client'
+import store from '../store/index'
 
 var mgr = new Oidc.UserManager({
   userStore: new Oidc.WebStorageStateStore(),
@@ -22,6 +23,7 @@ var mgr = new Oidc.UserManager({
 
 // 在建立(或重新建立)用户会话时引发。实际只有重新刷新的时候才会触发？
 mgr.events.addUserLoaded(function (user) {
+  store.commit('SetUserInfo', user)
   console.log('New User Loaded：', arguments)
   console.log('Acess_token: ', user.access_token)
 })
