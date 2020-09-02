@@ -4,13 +4,14 @@
 
 <script>
 import Oidc from 'oidc-client'
-console.log('renewing tokens')
-new Oidc.UserManager({
-  userStore: new Oidc.WebStorageStateStore({
-    store: window.localStorage
-  })
-}).signinSilentCallback()
-export default {}
+
+export default {
+  mounted() {
+    console.log('renewing tokens')
+
+    new Oidc.UserManager().signinSilentCallback()
+  }
+}
 </script>
 
 <style>
