@@ -8,13 +8,19 @@
 
 <script>
 import Mgr from '../services/SecurityService'
+import { mapActions } from 'vuex'
 export default {
   data() {
     return {
-      mgr: new Mgr()
+      mgr: new Mgr(),
+      userinfo: {}
     }
   },
+  async mounted() {
+    this.userinfo = await this.getProfileAsync()
+  },
   methods: {
+    ...mapActions(['getProfileAsync']),
     renewToken() {
       this.mgr.renewToken().then(
         newToken => {
@@ -25,7 +31,7 @@ export default {
         })
     },
     getUser() {
-      console.log(this.$store.state.user)
+      console.log(this.userinfo.name)
     }
   }
 }

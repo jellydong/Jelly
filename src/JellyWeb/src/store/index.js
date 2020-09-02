@@ -1,24 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import Mgr from '../services/SecurityService'
 Vue.use(Vuex)
+const mgr = new Mgr()
 
 export default new Vuex.Store({
   state: {
-    count: 100,
-    user: {
-      name: '张三'
-    },
-    accessToken: ''
+    count: 100
   },
   mutations: {
-    setUser(state, user) {
-      debugger
-      this.state.user = user
-      this.state.accessToken = user.access_token
-    }
   },
   actions: {
+    async getProfileAsync() {
+      return await mgr.getProfile()
+    }
   },
   modules: {
   }
