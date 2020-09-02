@@ -71,25 +71,14 @@ router.beforeEach((to, from, next) => {
   // from 代表从哪个路径跳转而来
   // next 是一个函数，表示放行
   //     next()  放行    next('/login')  强制跳转
-
   const notRequiresAuth = to.matched.some(record => record.meta.notRequiresAuth)
   console.log(notRequiresAuth)
   if (!notRequiresAuth) {
-    mgr.getUser().then(
-      user => {
-        if (user === null) {
-          mgr.getSignedIn().then(
-            signIn => {
-              console.log(signIn)
-            })
-        } else {
-          next()
-        }
-      },
-      err => {
-        console.log(err)
+    mgr.getSignedIn(to.path).then((res) => {
+      if (res) {
+        next()
       }
-    )
+    })
   } else {
     next()
   }

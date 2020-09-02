@@ -3,13 +3,20 @@
 </template>
 
 <script>
-import Oidc from 'oidc-client'
+import Mgr from '../../services/SecurityService'
 
 export default {
+  data() {
+    return {
+      user: new Mgr({ response_mode: 'query' })
+    }
+  },
   mounted() {
     console.log('renewing tokens')
 
-    new Oidc.UserManager().signinSilentCallback()
+    this.user.signinSilentCallback().then(res => {
+      debugger
+    })
   }
 }
 </script>
