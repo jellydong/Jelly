@@ -10,13 +10,14 @@
 <script>
 import Mgr from '../services/SecurityService'
 import { mapState } from 'vuex'
-
 export default {
   data() {
     return {
-      mgr: new Mgr(),
-      ...mapState(['count'])
+      mgr: new Mgr()
     }
+  },
+  computed: {
+    ...mapState(['count', 'userInfo'])
   },
   methods: {
     renewToken() {
@@ -32,7 +33,7 @@ export default {
       console.log(this.count)
     },
     getUserVuexState() {
-      console.log(this.userInfo)
+      console.log(this.$store.state.userInfo)
     }
   }
 }
