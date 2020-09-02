@@ -10,7 +10,7 @@ var mgr = new Oidc.UserManager({
   post_logout_redirect_uri: window.location.origin + '/',
   silent_redirect_uri: window.location.origin + '/SilentCallback',
   // 自动刷新Token使用自动刷新Token需要accessTokenExpiringNotificationTime和automaticSilentRenew 一起设置，当AccssToken要过期前:accessTokenExpiringNotificationTime设置的时间，会去请求IdentityServer4 connect/token接口，刷新Token
-  accessTokenExpiringNotificationTime: 115,
+  accessTokenExpiringNotificationTime: 60,
   automaticSilentRenew: true,
   filterProtocolClaims: true,
   includeIdTokenInSilentRenew: true,
@@ -96,14 +96,24 @@ export default class SecurityService {
     })
   }
 
+  signinRedirectCallback() {
+    return new Promise((resolve, reject) => {
+      mgr.signinRedirectCallback().then(function (res) {
+        return resolve(res)
+      }
+      ).catch(function (err) {
+        return reject(err)
+      })
+    })
+  }
+
   // Check if there is any user logged in
-  getSignedIn() {
-    debugger
+  getSignedIn(returnPath) {
     const self = this
     return new Promise((resolve, reject) => {
       mgr.getUser().then(function (user) {
         if (user == null) {
-          self.signIn()
+          self.signIn(returnPath)
           return resolve(false)
         } else {
           return resolve(true)
