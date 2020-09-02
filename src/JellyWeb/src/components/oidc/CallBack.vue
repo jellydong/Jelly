@@ -17,7 +17,6 @@ export default {
     this.user
       .signinRedirectCallback()
       .then((result) => {
-        debugger
         var returnUrl = '/'
         console.info(result)
         if (result.state) {

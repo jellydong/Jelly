@@ -14,9 +14,7 @@ export default {
   mounted() {
     console.log('renewing tokens')
 
-    this.user.signinSilentCallback().then(res => {
-      debugger
-    })
+    this.user.signinSilentCallback()
   }
 }
 </script>
