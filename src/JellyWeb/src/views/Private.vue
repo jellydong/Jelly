@@ -1,7 +1,8 @@
 <template>
   <div>
     <h1>这个页面需要权限才能访问</h1>
-    <a class="nav-link" @click="renewToken()" href="#">Force Access Token Renewal</a>
+    <a class="nav-link" @click="renewToken()" href="#">Force Access Token Renewal</a><br/>
+    <a class="nav-link" @click="getUser()" href="#">getUser</a>
   </div>
 </template>
 
@@ -22,6 +23,9 @@ export default {
         err => {
           console.log(err)
         })
+    },
+    getUser() {
+      console.log(this.$store.state.user)
     }
   }
 }
