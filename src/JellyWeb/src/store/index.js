@@ -8,11 +8,14 @@ export default new Vuex.Store({
     userInfo: null
   },
   mutations: {
-    SetUserInfo(state, userInfo) {
+    SET_USERINFO(state, userInfo) {
       state.userInfo = userInfo
     }
   },
   actions: {
+    SetUserInfo({ commit }, userInfo) {
+      commit('SET_USERINFO', userInfo)
+    }
   },
   modules: {
   }
