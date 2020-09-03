@@ -23,7 +23,7 @@ var mgr = new Oidc.UserManager({
 
 // 在建立(或重新建立)用户会话时引发。实际只有重新刷新的时候才会触发？
 mgr.events.addUserLoaded(function (user) {
-  store.dispatch('SetUserInfo', user)
+  store.dispatch('SetUserInfo', user.profile)
   console.log('New User Loaded：', arguments)
   console.log('Acess_token: ', user.access_token)
 })
@@ -52,6 +52,7 @@ mgr.events.addSilentRenewError(function () {
 // 用户登录状态发生变化时
 mgr.events.addUserSignedOut(function () {
   alert('Going out!')
+  store.dispatch('SetUserInfo', null)
   console.log('UserSignedOut：', arguments)
   mgr.signoutRedirect().then(function (resp) {
     console.log('signed out', resp)
