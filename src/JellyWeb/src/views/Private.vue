@@ -45,12 +45,16 @@ export default {
     },
     getUser() {
       getUserInfo().then(res => {
-        console.log(res)
+        this.$notify({
+          title: '成功',
+          message: JSON.stringify(res),
+          type: 'success'
+        })
       })
     },
     getValues() {
       getValues().then(res => {
-        console.log(res)
+        this.$alert(JSON.stringify(res), '成功')
       })
     }
   }
