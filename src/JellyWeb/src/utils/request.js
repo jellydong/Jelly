@@ -1,6 +1,9 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '../store/index'
+// 导入 NProgress 包对应的JS和CSS
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 // 创建一个axios实例
 const service = axios.create({
@@ -20,6 +23,8 @@ service.interceptors.request.use(
       // 让每个请求携带令牌
       config.headers.Authorization = `Bearer ${store.getters.accessToken}`
     }
+    // 在 request 拦截器中，展示进度条 NProgress.start()
+    NProgress.start()
     // 在最后必须 return config
     return config
   },
@@ -33,6 +38,9 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   response => {
+    // 在 response 拦截器中，隐藏进度条 NProgress.done()
+    NProgress.done()
+
     if (response.status !== 200) {
       const res = response.data
       if (!res.Success) {
