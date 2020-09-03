@@ -1,9 +1,14 @@
 import request from '../utils/request'
 
 export function getUserInfo() {
-  debugger
   return request({
-    url: '/identity',
+    url: '/identitys',
+    method: 'get'
+  })
+}
+export function getValues() {
+  return request({
+    url: '/values',
     method: 'get'
   })
 }

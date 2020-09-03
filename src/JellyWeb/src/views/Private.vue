@@ -6,13 +6,14 @@
     <a class="nav-link" @click="getUserVuexState()" href="#">getUserVuexState</a><br/>
     <a class="nav-link" @click="elementMessage()" href="#">elementMessage</a><br/>
     <a class="nav-link" @click="getUser()" href="#">getUser</a><br/>
+    <a class="nav-link" @click="getValues()" href="#">getValues</a><br/>
   </div>
 </template>
 
 <script>
 import Mgr from '../services/SecurityService'
 import { mapState } from 'vuex'
-import request from '../utils/request'
+import { getUserInfo, getValues } from '../api/private'
 
 export default {
   data() {
@@ -43,10 +44,12 @@ export default {
       this.$message.info('info 消息')
     },
     getUser() {
-      request({
-        url: '/identity',
-        method: 'get'
-      }).then(res => {
+      getUserInfo().then(res => {
+        console.log(res)
+      })
+    },
+    getValues() {
+      getValues().then(res => {
         console.log(res)
       })
     }
