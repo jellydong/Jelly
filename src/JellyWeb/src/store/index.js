@@ -25,5 +25,11 @@ export default new Vuex.Store({
     }
   },
   modules: {
+  },
+  getters: {
+    accessToken: state => state.accessToken
+    // accessToken(state) {
+    //   return state.accessToken
+    // }
   }
 })
