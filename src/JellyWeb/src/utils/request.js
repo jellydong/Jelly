@@ -30,6 +30,7 @@ service.interceptors.request.use(
   },
   error => {
     // 请求错误
+    NProgress.done()
     console.log(error) // for debug
     return Promise.reject(error) // 错误提示
   }
@@ -41,17 +42,9 @@ service.interceptors.response.use(
     // 在 response 拦截器中，隐藏进度条 NProgress.done()
     NProgress.done()
 
-    if (response.status !== 200) {
+    if (response.status === 200) {
       const res = response.data
-      if (!res.Success) {
-        Message({
-          message: res.Message || 'Error',
-          type: 'error',
-          duration: 5 * 1000
-        })
-      } else {
-        return res
-      }
+      return res
     } else {
       switch (response.status) {
         case 500:
@@ -79,6 +72,7 @@ service.interceptors.response.use(
     }
   },
   error => {
+    NProgress.done()
     console.log('err' + error) // for debug
     Message({
       message: error.message,
