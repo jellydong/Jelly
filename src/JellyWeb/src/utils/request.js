@@ -1,9 +1,12 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
-import store from '../store/index'
+
 // 导入 NProgress 包对应的JS和CSS
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+
+import Mgr from '../services/SecurityService'
+const mgr = new Mgr()
 
 // 创建一个axios实例
 const service = axios.create({
@@ -17,12 +20,12 @@ const service = axios.create({
 
 // 请求拦截器
 service.interceptors.request.use(
-  config => {
+  async config => {
     // 在请求发送之前需要处理的代码
-    if (store.getters.accessToken) {
+    await mgr.getAcessToken().then(accessToken => {
       // 让每个请求携带令牌
-      config.headers.Authorization = `Bearer ${store.getters.accessToken}`
-    }
+      config.headers.Authorization = `Bearer ${accessToken}`
+    })
     // 在 request 拦截器中，展示进度条 NProgress.start()
     NProgress.start()
     // 在最后必须 return config

@@ -42,6 +42,7 @@ mgr.events.addAccessTokenExpired(function () {
     type: 'error',
     duration: 5 * 1000
   })
+  store.dispatch('SetUserInfo', null)
   mgr.signoutRedirect().then(function (resp) {
     console.log('signed out', resp)
   }).catch(function (err) {
@@ -140,6 +141,7 @@ export default class SecurityService {
           self.signIn(returnPath)
           return resolve(false)
         } else {
+          store.dispatch('SetUserInfo', user)
           return resolve(true)
         }
       }).catch(function (err) {
