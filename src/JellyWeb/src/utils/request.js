@@ -35,6 +35,12 @@ service.interceptors.request.use(
     // 请求错误
     NProgress.done()
     console.log(error) // for debug
+    Message({
+      message: error.message,
+      showClose: true,
+      type: 'error',
+      duration: 5 * 1000
+    })
     return Promise.reject(error) // 错误提示
   }
 )
@@ -44,45 +50,36 @@ service.interceptors.response.use(
   response => {
     // 在 response 拦截器中，隐藏进度条 NProgress.done()
     NProgress.done()
-
-    if (response.status === 200) {
-      const res = response.data
-      return res
-    } else {
-      switch (response.status) {
-        case 500:
-          Message.error({ showClose: true, message: response.data.message })
-          break
-        case 401:
-          Message.error({ showClose: true, message: '未授权' })
-          break
-        case 403:
-          Message.error({ showClose: true, message: '无权限访问' })
-          break
-        case 404:
-          Message.error({ showClose: true, message: '请求地址不存在' })
-          break
-        case 400:
-          var errorMsg = response.data.error_description || response.data.message || response.data[0].description
-          if (errorMsg) {
-            Message.error({ showClose: true, message: errorMsg })
-          }
-          break
-        default:
-          Message.error({ showClose: true, message: '未知异常联系管理员' })
-          break
-      }
-    }
+    const res = response.data
+    // 这里可以根据后台统一返回的进行判断处理 比如 返回的success如果是失败，直接这里提示就可以了
+    return res
   },
   error => {
     NProgress.done()
     console.log('err' + error) // for debug
-    Message({
-      message: error.message,
-      showClose: true,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    switch (error.response.status) {
+      case 500:
+        Message.error({ showClose: true, message: error.response.data.message, duration: 5 * 1000 })
+        break
+      case 401:
+        Message.error({ showClose: true, message: '未授权', duration: 5 * 1000 })
+        break
+      case 403:
+        Message.error({ showClose: true, message: '无权限访问', duration: 5 * 1000 })
+        break
+      case 404:
+        Message.error({ showClose: true, message: '请求地址不存在', duration: 5 * 1000 })
+        break
+      case 400:
+        var errorMsg = error.response.data.error_description || error.response.data.message || error.response.data[0].description
+        if (errorMsg) {
+          Message.error({ showClose: true, message: errorMsg, duration: 5 * 1000 })
+        }
+        break
+      default:
+        Message.error({ showClose: true, message: '未知异常联系管理员', duration: 5 * 1000 })
+        break
+    }
     return Promise.reject(error)
   }
 )
