@@ -4,6 +4,7 @@
     <a class="nav-link" @click="renewToken()" href="#">Force Access Token Renewal</a><br/>
     <a class="nav-link" @click="getCount()" href="#">getCount</a><br/>
     <a class="nav-link" @click="getUserVuexState()" href="#">getUserVuexState</a><br/>
+    <a class="nav-link" @click="elementMessage()" href="#">elementMessage</a><br/>
   </div>
 </template>
 
@@ -34,6 +35,9 @@ export default {
     },
     getUserVuexState() {
       console.log(this.$store.state.userInfo)
+    },
+    elementMessage() {
+      this.$message.info('info 消息')
     }
   }
 }

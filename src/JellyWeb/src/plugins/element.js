@@ -74,5 +74,8 @@ Vue.use(Step)
 Vue.use(CheckboxGroup)
 Vue.use(Checkbox)
 Vue.use(Upload)
+
+// 按照以上设置，项目中所有拥有 size 属性的组件的默认尺寸均为 'small'。
+Vue.prototype.$ELEMENT = { size: 'small' }
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

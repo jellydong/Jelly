@@ -1,5 +1,6 @@
 import Oidc from 'oidc-client'
 import store from '../store/index'
+import { Message } from 'element-ui'
 
 var mgr = new Oidc.UserManager({
   userStore: new Oidc.WebStorageStateStore(),
@@ -36,7 +37,11 @@ mgr.events.addAccessTokenExpiring(function () {
 // 在访问令牌过期后引发。
 mgr.events.addAccessTokenExpired(function () {
   console.log('AccessToken Expired：', arguments)
-  alert('Session expired. Going out!')
+  Message({
+    message: 'Session expired. Going out!',
+    type: 'error',
+    duration: 5 * 1000
+  })
   mgr.signoutRedirect().then(function (resp) {
     console.log('signed out', resp)
   }).catch(function (err) {
@@ -51,7 +56,12 @@ mgr.events.addSilentRenewError(function () {
 
 // 用户登录状态发生变化时
 mgr.events.addUserSignedOut(function () {
-  alert('Going out!')
+  console.log('用户已登出')
+  Message({
+    message: '用户已登出',
+    type: 'error',
+    duration: 5 * 1000
+  })
   store.dispatch('SetUserInfo', null)
   console.log('UserSignedOut：', arguments)
   mgr.signoutRedirect().then(function (resp) {
