@@ -5,11 +5,18 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     count: 100,
-    userInfo: null
+    userInfo: null,
+    accessToken: ''
   },
   mutations: {
     SET_USERINFO(state, userInfo) {
-      state.userInfo = userInfo
+      if (userInfo != null) {
+        state.accessToken = userInfo.access_token
+        state.userInfo = userInfo.profile
+      } else {
+        state.accessToken = ''
+        state.userInfo = null
+      }
     }
   },
   actions: {
