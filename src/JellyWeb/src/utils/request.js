@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
+import { message } from 'ant-design-vue'
 
 // 导入 NProgress 包对应的JS和CSS
 import NProgress from 'nprogress'
@@ -35,12 +35,7 @@ service.interceptors.request.use(
     // 请求错误
     NProgress.done()
     console.log(error) // for debug
-    Message({
-      message: error.message,
-      showClose: true,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    message.error({ content: error.message, duration: 2 })
     return Promise.reject(error) // 错误提示
   }
 )
@@ -59,25 +54,25 @@ service.interceptors.response.use(
     console.log('err' + error) // for debug
     switch (error.response.status) {
       case 500:
-        Message.error({ showClose: true, message: error.response.data.message, duration: 5 * 1000 })
+        message.error({ content: error.response.data.message, duration: 2 })
         break
       case 401:
-        Message.error({ showClose: true, message: '未授权', duration: 5 * 1000 })
+        message.error({ content: '未授权', duration: 2 })
         break
       case 403:
-        Message.error({ showClose: true, message: '无权限访问', duration: 5 * 1000 })
+        message.error({ content: '无权限访问', duration: 2 })
         break
       case 404:
-        Message.error({ showClose: true, message: '请求地址不存在', duration: 5 * 1000 })
+        message.error({ content: '请求地址不存在', duration: 2 })
         break
       case 400:
         var errorMsg = error.response.data.error_description || error.response.data.message || error.response.data[0].description
         if (errorMsg) {
-          Message.error({ showClose: true, message: errorMsg, duration: 5 * 1000 })
+          message.error({ content: errorMsg, duration: 2 })
         }
         break
       default:
-        Message.error({ showClose: true, message: '未知异常联系管理员', duration: 5 * 1000 })
+        message.error({ content: '未知异常联系管理员', duration: 2 })
         break
     }
     return Promise.reject(error)

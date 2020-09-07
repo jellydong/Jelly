@@ -1,6 +1,6 @@
 import Oidc from 'oidc-client'
 import store from '../store/index'
-import { Message } from 'element-ui'
+import { message } from 'ant-design-vue'
 
 var mgr = new Oidc.UserManager({
   userStore: new Oidc.WebStorageStateStore(),
@@ -37,11 +37,7 @@ mgr.events.addAccessTokenExpiring(function () {
 // 在访问令牌过期后引发。
 mgr.events.addAccessTokenExpired(function () {
   console.log('AccessToken Expired：', arguments)
-  Message({
-    message: 'Session expired. Going out!',
-    type: 'error',
-    duration: 5 * 1000
-  })
+  message.info('Session expired. Going out!')
   store.dispatch('SetUserInfo', null)
   mgr.signoutRedirect().then(function (resp) {
     console.log('signed out', resp)
@@ -58,11 +54,7 @@ mgr.events.addSilentRenewError(function () {
 // 用户登录状态发生变化时
 mgr.events.addUserSignedOut(function () {
   console.log('用户已登出')
-  Message({
-    message: '用户已登出',
-    type: 'error',
-    duration: 5 * 1000
-  })
+  message.info('用户已登出')
   store.dispatch('SetUserInfo', null)
   console.log('UserSignedOut：', arguments)
   mgr.signoutRedirect().then(function (resp) {

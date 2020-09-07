@@ -42,6 +42,10 @@ export default {
     },
     elementMessage() {
       this.$message.info('info 消息')
+      this.$notification.success({
+        message: 'Notification Title',
+        description: 'This is the content of the notification. This is the content of the notification. This is the content of the notification.'
+      })
     },
     getUser() {
       getUserInfo().then(res => {
@@ -54,7 +58,10 @@ export default {
     },
     getValues() {
       getValues().then(res => {
-        this.$alert(JSON.stringify(res), '成功')
+        this.$success({
+          title: '成功',
+          content: JSON.stringify(res)
+        })
       })
     }
   }
