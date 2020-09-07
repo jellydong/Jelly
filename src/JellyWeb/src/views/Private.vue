@@ -54,7 +54,10 @@ export default {
     },
     getValues() {
       getValues().then(res => {
-        this.$alert(JSON.stringify(res), '成功')
+        this.$success({
+          title: '成功',
+          content: JSON.stringify(res)
+        })
       })
     }
   }
