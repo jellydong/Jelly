@@ -173,7 +173,7 @@ namespace Jelly.IdentityServer
                 ,
                 new Client()
                 {
-                    ClientId = "vuejsclient",
+                    ClientId = "vuedemo",
                     ClientName = " vuejs ",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser=true,
@@ -184,18 +184,18 @@ namespace Jelly.IdentityServer
                     AlwaysIncludeUserClaimsInIdToken = true,
                     RequireConsent = false,
                     AccessTokenLifetime = 60 * 2,
-                    RedirectUris = new List<string>()
+                    RedirectUris =
                     {
-                        "http://localhost:8090/static/callback.html",
-                        "http://localhost:8090/static/silent-renew.html"
+                        "http://localhost:8082/oidc-callback",
+                        "http://localhost:8082/silent-renew.html"
                     },
-                    PostLogoutRedirectUris = {
-                        "http://localhost:8090/index.html"
+                    PostLogoutRedirectUris =
+                    {
+                        "http://localhost:8082"
                     },
                     AllowedCorsOrigins = {
-                        "http://localhost:8090"
+                        "http://localhost:8082"
                     },
-
                     AllowedScopes =
                     {
 
